@@ -80,6 +80,7 @@ public class Register extends AppCompatActivity {
                             }
                         }
                     });
+                    openRestaurantList();
                 }else{
                     Toast.makeText(Register.this,"please fill all the details",Toast.LENGTH_SHORT).show();
                 }
@@ -108,7 +109,10 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-
-
-    }}
+    }
+    public void openRestaurantList(){
+        Intent intent2= new Intent (this, RestaurantList.class);
+        startActivity(intent2);
+    }
+}
 

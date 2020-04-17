@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String email= Email.getText().toString();
                 String password= Password.getText().toString();
-
+                openRestaurantList();
                 final logindata R = new logindata(email,password);
                 if(!email.isEmpty() && !password.isEmpty()){
                     Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -68,6 +68,7 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 db.getReference().child(Auth.getUid()).setValue(R);
+
                             }
                         }
                     });
@@ -82,5 +83,9 @@ public class Login extends AppCompatActivity {
     private void openRegister() {
         Intent intent= new Intent(this,Register.class);
         startActivity(intent);
+    }
+    public void openRestaurantList(){
+        Intent intent2= new Intent (this, RestaurantList.class);
+        startActivity(intent2);
     }
 }

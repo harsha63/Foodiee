@@ -16,7 +16,6 @@ public class logindata {
         this.password = password;
         this.contact = contact;
         this.name = name;
-
     }
 
     public String getEmail() {

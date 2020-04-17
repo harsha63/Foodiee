@@ -2,17 +2,17 @@ package com.example.login;
 
 public class logindata {
     
-    String email;
-    String password;
-    String name;
-    String contact;
+    public String emailssss;
+    public String password;
+    public String name;
+    public String contact;
 
 
     public logindata(String email, String password) {
     }
 
     public logindata(String name, String contact, String email, String password) {
-        this.email = email;
+        this.emailssss = email;
         this.password = password;
         this.contact = contact;
         this.name = name;
@@ -20,11 +20,11 @@ public class logindata {
     }
 
     public String getEmail() {
-        return email;
+        return emailssss;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.emailssss = email;
     }
 
     public String getPassword() {

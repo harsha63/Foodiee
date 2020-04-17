@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -57,11 +58,11 @@ public class Register extends AppCompatActivity {
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name= Name.getText().toString();
-                String contact= Contact.getText().toString();
+                final String name= Name.getText().toString();
+                final String contact= Contact.getText().toString();
                 Log.d("HELLLOOO", contact+ " "+name);
-                String email= Email.getText().toString();
-                String password= Password.getText().toString();
+                final String email= Email.getText().toString();
+                final String password= Password.getText().toString();
 
                 Reg = new logindata(name,contact,email,password);
                 if(!email.isEmpty() && !password.isEmpty()){
@@ -69,7 +70,13 @@ public class Register extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                db1.getReference().child(Auth.getUid()).setValue(Reg);
+                                DatabaseReference fr =  db1.getReference().child(Auth.getUid());
+                                HashMap<String, Object> result = new HashMap<>();
+                                result.put("name", name);
+                                result.put("Email", email);
+                                result.put("contact", contact);
+                                result.put("password", password);
+                                fr.setValue(result);
                             }
                         }
                     });

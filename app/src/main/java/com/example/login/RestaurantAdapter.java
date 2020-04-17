@@ -7,6 +7,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +20,15 @@ import java.util.List;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestList;
-    private ArrayList<Restaurant> mRestListFull;
+    FirebaseFirestore fStore;
+    FirebaseAuth mFAuth;
+
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mText1;
         public TextView mText2;
+
         public RestaurantViewHolder( View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.image1);
@@ -31,7 +38,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     }
     public RestaurantAdapter(ArrayList<Restaurant> restList) {
         mRestList=restList;
-        mRestListFull = new ArrayList<>(restList);
     }
     @NonNull
     @Override

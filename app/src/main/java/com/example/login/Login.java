@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,69 +30,57 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
     public static final String TAG = "TAG";
-    private EditText mEmail, mPassword;
-    private Button mLoginButton;
-    FirebaseAuth mFAuth;
-    ProgressBar mProgressBar;
-    String userID;
-    FirebaseFirestore fStore;
-    TextView mRegisterButton;
+    private EditText Email, Password;
+    Button button,submit;
+    FirebaseAuth Auth;
+    FirebaseDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mEmail = findViewById(R.id.Email2);
-        mPassword = findViewById(R.id.pass2);
-        mLoginButton = findViewById(R.id.registering2);
-
-        mFAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-        mProgressBar = findViewById(R.id.progressBar);
-        mRegisterButton = findViewById(R.id.Reg);
-
-
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
+        Email = findViewById(R.id.Email2);
+        Password = findViewById(R.id.pass2);
+        submit = findViewById(R.id.registering2);
+        button =findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String Emails = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(Emails)) {
-                    mEmail.setError("Email field Empty");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password field is Empty");
-                    return;
-                }
-                if (password.length() <= 6) {
-                    mPassword.setError("Password length should be greater than 6");
-                    return;
-                }
-                mProgressBar.setVisibility(View.VISIBLE);
+                openRegister();
+            }
+        });
+        Auth = FirebaseAuth.getInstance();
+        db=FirebaseDatabase.getInstance();
 
-                mFAuth.signInWithEmailAndPassword(Emails, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
-                            Toast.makeText(Login.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            mProgressBar.setVisibility(View.GONE);
+
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email= Email.getText().toString();
+                String password= Password.getText().toString();
+
+                final logindata R = new logindata(email,password);
+                if(!email.isEmpty() && !password.isEmpty()){
+                    Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                db.getReference().child(Auth.getUid()).setValue(R);
+                            }
                         }
+                    });
+                }else{
+                    Toast.makeText(Login.this,"please fill all the details",Toast.LENGTH_SHORT).show();
+                }
 
-                    }
-                });
             }
         });
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Register.class));
-            }
-        });
+    }
 
-
+    private void openRegister() {
+        Intent intent= new Intent(this,Register.class);
+        startActivity(intent);
     }
 }

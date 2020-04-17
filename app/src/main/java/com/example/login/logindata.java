@@ -4,16 +4,18 @@ public class logindata {
     
     String email;
     String password;
+    String name;
+    String contact;
 
-    public logindata() {
-        this.email = email;
-        this.password = password;
-    }
 
     public logindata(String email, String password) {
     }
 
     public logindata(String name, String contact, String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.contact = contact;
+        this.name = name;
 
     }
 

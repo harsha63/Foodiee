@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +38,7 @@ public class Register extends AppCompatActivity {
     Button customer,delivery;
     FirebaseAuth Auth;
     FirebaseDatabase db1,db2;
+    logindata Reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +53,17 @@ public class Register extends AppCompatActivity {
 
         Auth=FirebaseAuth.getInstance();
         db1=FirebaseDatabase.getInstance();
-        db2=FirebaseDatabase.getInstance();
 
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name= Name.getText().toString();
                 String contact= Contact.getText().toString();
+                Log.d("HELLLOOO", contact+ " "+name);
                 String email= Email.getText().toString();
                 String password= Password.getText().toString();
 
-                final logindata Reg = new logindata(name,contact,email,password);
+                Reg = new logindata(name,contact,email,password);
                 if(!email.isEmpty() && !password.isEmpty()){
                     Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -84,7 +86,7 @@ public class Register extends AppCompatActivity {
                 String email= Email.getText().toString();
                 String password= Password.getText().toString();
 
-                final logindata Reg = new logindata(name,contact,email,password);
+                Reg = new logindata(name,contact,email,password);
                 if(!email.isEmpty() && !password.isEmpty()){
                     Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override

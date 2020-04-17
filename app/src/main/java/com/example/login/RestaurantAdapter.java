@@ -21,7 +21,7 @@ import java.util.List;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestList;
     FirebaseFirestore fStore;
-    FirebaseAuth mFAuth;
+
 
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {

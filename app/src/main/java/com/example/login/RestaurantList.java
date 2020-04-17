@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RestaurantList extends AppCompatActivity {
+    ArrayList<Restaurant> restaurantList;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     RecyclerView.Adapter mAdaptor;
@@ -20,7 +21,11 @@ public class RestaurantList extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_list);
-        ArrayList<Restaurant> restaurantList = new ArrayList<>();
+        fillRestName();
+        setUpRecyclerView();
+    }
+    public void fillRestName(){
+        restaurantList = new ArrayList<>();
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "new", "food" ));
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "new", "food again" ));
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "new", "food finally" ));
@@ -36,7 +41,8 @@ public class RestaurantList extends AppCompatActivity {
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "eat and sleep", "food" ));
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "drugged", "again" ));
         restaurantList.add(new Restaurant(R.drawable.ic_free_breakfast_black_24dp, "yes health", "vegan again"));
-
+    }
+    public void setUpRecyclerView(){
         mRecyclerView = findViewById(R.id.restaurantsName);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -44,8 +50,6 @@ public class RestaurantList extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdaptor);
-
-
     }
     /*@Override
     public boolean onCreateOptionsMenu (Menu menu){
